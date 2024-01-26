@@ -15,12 +15,10 @@ const addFlower = catchAsync(async (req, res) => {
   });
 });
 
-
 /* view all the flowers controller */
 
 const getAllFlowers = catchAsync(async (req, res) => {
-
-  const result = await flowerServices.getAllFlowersIntoDB();
+  const result = await flowerServices.getAllFlowersFromDB();
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -29,12 +27,66 @@ const getAllFlowers = catchAsync(async (req, res) => {
   });
 });
 
+/* get specific flower controller */
+
+const getSingleFlower = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const result = await flowerServices.getSingleFlowersFromDB(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Single Flower Fetched Successfully',
+    data: result,
+  });
+});
+
 /* update a flower controller  */
+
+const updateFlower = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const payload = req.body;
+  const result = await flowerServices.updateFlowerIntoDB(id, payload);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Update Flower Successfully',
+    data: result,
+  });
+});
 
 /* delete a flower controller */
 
+const deleteFlower = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const result = await flowerServices.deleteFlowerFromDB(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Delete Flower Successfully',
+    data: result,
+  });
+});
+
+/* delete a flower controller */
+
+const BulkDeleteFlower = catchAsync(async (req, res) => {
+  const payload = req?.body?.data;
+  const result = await flowerServices.bulkDeleteFlowersFromDB(payload);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bulk delete Flowers Successfully',
+    data: result,
+  });
+});
 
 export const flowersController = {
   addFlower,
-  getAllFlowers
-}
+  getAllFlowers,
+  getSingleFlower,
+  updateFlower,
+  deleteFlower,
+  BulkDeleteFlower,
+};

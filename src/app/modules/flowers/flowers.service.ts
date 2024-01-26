@@ -12,8 +12,16 @@ const addFlowerIntoDB = async (payload:IFLowers) => {
 
 /* read and view all flowers from inventory */
 
-const getAllFlowersIntoDB = async () => {
+const getAllFlowersFromDB = async () => {
   const result = await FlowerModel.find();
+  return result;
+}
+
+
+/* read single flowers from inventory */
+
+const getSingleFlowersFromDB = async (id:string) => {
+  const result = await FlowerModel.findById(id);
   return result;
 }
 
@@ -22,10 +30,32 @@ const getAllFlowersIntoDB = async () => {
 /* update a flower from the inventory */
 
 
+
+const updateFlowerIntoDB = async (id:string,payload:Partial<IFLowers>) => {
+  const result = await FlowerModel.findByIdAndUpdate(id,payload,{runValidators:true,new:true});
+  return result;
+};
+
+
 /* delete a flower from the inventory */
+
+const deleteFlowerFromDB = async (id: string) => {
+  const result = await FlowerModel.findByIdAndDelete(id);
+  return result;
+};
+
+const bulkDeleteFlowersFromDB = async (payload:Partial<[]>) => {
+  console.log(payload)
+  const result = await FlowerModel.deleteMany({_id:{$in:payload}});
+  return result;
+};
 
 
 export const flowerServices = {
- addFlowerIntoDB,
- getAllFlowersIntoDB
-}
+  addFlowerIntoDB,
+  getAllFlowersFromDB,
+  getSingleFlowersFromDB,
+  updateFlowerIntoDB,
+  deleteFlowerFromDB,
+  bulkDeleteFlowersFromDB,
+};

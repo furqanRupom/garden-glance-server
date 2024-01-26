@@ -19,15 +19,18 @@ router.get('/',flowersController.getAllFlowers);
 
 /* view specific flowers */
 
-router.get('/:id')
+router.get('/:id',flowersController.getSingleFlower)
 
 /* delete flower  */
 
-router.delete('/:id');
+router.delete('/:id',flowersController.deleteFlower);
 
 /* update a flower */
 
-router.put('/:id')
+router.put('/:id',validateRequest(flowerValidation.FlowerUpdateValidationSchema),flowersController.updateFlower)
+
+/* bulk delete */
+router.delete('/bulk/delete',flowersController.BulkDeleteFlower)
 
 
 export const flowersRoutes = router;
