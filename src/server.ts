@@ -7,10 +7,10 @@ let server: Server;
 
 const main = async () => {
   try {
-    // const connect = await mongoose.connect(config.database_url as string);
-    // if (connect) {
-    //   console.log("successfully connected");
-    // }
+    const connect = await mongoose.connect(config.database_url as string);
+    if (connect) {
+      console.log("successfully connected");
+    }
     server = app.listen(config.port, () => {
       console.log(`Garden Glance server  is running on port ${config.port}`);
     });
