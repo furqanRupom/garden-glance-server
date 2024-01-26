@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
-import { IError } from '../interface/error';
+
 import config from '../config';
+
+export interface IError {
+  success: boolean;
+  message: string;
+  errorMessage: string;
+  errorDetails: object;
+  stack?: unknown;
+}
 
 export const handleValidationError = (
   error: mongoose.Error.ValidationError,

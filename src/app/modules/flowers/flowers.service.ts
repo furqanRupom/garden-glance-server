@@ -12,7 +12,10 @@ const addFlowerIntoDB = async (payload:IFLowers) => {
 
 /* read and view all flowers from inventory */
 
-
+const getAllFlowersIntoDB = async () => {
+  const result = await FlowerModel.find();
+  return result;
+}
 
 
 
@@ -23,5 +26,6 @@ const addFlowerIntoDB = async (payload:IFLowers) => {
 
 
 export const flowerServices = {
- addFlowerIntoDB
+ addFlowerIntoDB,
+ getAllFlowersIntoDB
 }

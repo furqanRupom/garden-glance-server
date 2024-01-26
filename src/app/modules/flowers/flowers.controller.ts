@@ -15,7 +15,19 @@ const addFlower = catchAsync(async (req, res) => {
   });
 });
 
+
 /* view all the flowers controller */
+
+const getAllFlowers = catchAsync(async (req, res) => {
+
+  const result = await flowerServices.getAllFlowersIntoDB();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'All Flowers Fetched Successfully',
+    data: result,
+  });
+});
 
 /* update a flower controller  */
 
@@ -23,5 +35,6 @@ const addFlower = catchAsync(async (req, res) => {
 
 
 export const flowersController = {
-  addFlower
+  addFlower,
+  getAllFlowers
 }

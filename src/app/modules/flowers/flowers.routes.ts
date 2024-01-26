@@ -15,7 +15,7 @@ router.post('/add-flower',validateRequest(flowerValidation.FlowerValidationSchem
 
 /* view and retrieve all the flowers */
 
-router.get('/');
+router.get('/',flowersController.getAllFlowers);
 
 /* view specific flowers */
 
