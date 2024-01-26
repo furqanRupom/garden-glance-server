@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from './auth.interface';
+import { IUser, IUserModel } from './auth.interface';
 import bcrypt from 'bcryptjs';
 import config from '../../config';
 
@@ -40,4 +40,18 @@ userSchema.pre('save', async function (this, next) {
   next();
 });
 
-export const UserModel = model<IUser>('User', userSchema);
+/* check that is users is exit or not */
+
+userSchema.statics.isUsersExitsByEmail = async function (email) {
+ return await this.findOne({email}).select('+password')
+}
+
+/* checking  password matching */
+
+userSchema.statics.isPasswordMatched = async function(userPassword,hashedPassword) {
+ return bcrypt.compare(userPassword,hashedPassword)
+}
+export const UserModel = model<IUser,IUserModel>('User', userSchema);
+
+
+

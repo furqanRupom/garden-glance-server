@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/register',validateRequest(authValidations.userValidationSchema),authController.createUser)
 
-router.post('/login')
+router.post('/login',validateRequest(authValidations.loginValidationSchema),authController.userLogin)
 
 
 export const authRoutes = router;
