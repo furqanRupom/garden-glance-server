@@ -48,7 +48,15 @@ const loginUser = async (payload:{email:string,password:string}) => {
 
 
 
+const getUserFromDB = async (email:string) => {
+  const result = await UserModel.findOne({email});
+  return result;
+};
+
+
+
 export const authServices = {
   createUserIntoDB,
-  loginUser
+  loginUser,
+  getUserFromDB
 }

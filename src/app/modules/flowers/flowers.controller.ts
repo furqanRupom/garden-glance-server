@@ -72,12 +72,28 @@ const deleteFlower = catchAsync(async (req, res) => {
 /* delete a flower controller */
 
 const BulkDeleteFlower = catchAsync(async (req, res) => {
-  const payload = req?.body?.data;
+  const payload = req?.body;
+  console.log(req.body);
   const result = await flowerServices.bulkDeleteFlowersFromDB(payload);
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'Bulk delete Flowers Successfully',
+    data: result,
+  });
+});
+
+
+/* add a sell post */
+
+const addSoldProduct = catchAsync(async (req, res) => {
+  const payload = req?.body;
+  console.log(req.body);
+  const result = await flowerServices.addSoldProductIntoDB(payload);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'this product sold successfully !',
     data: result,
   });
 });
@@ -89,4 +105,5 @@ export const flowersController = {
   updateFlower,
   deleteFlower,
   BulkDeleteFlower,
+  addSoldProduct
 };

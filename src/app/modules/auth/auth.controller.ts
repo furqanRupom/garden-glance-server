@@ -34,7 +34,20 @@ const userLogin = catchAsync(async(req,res)=> {
 })
 
 
+const getUser = catchAsync(async (req, res) => {
+  const email = req.params.email;
+  const result = await authServices.getUserFromDB(email);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User Fetched Successfully',
+    data: result,
+  });
+});
+
+
 export const authController = {
   createUser,
-  userLogin
+  userLogin,
+  getUser
 }

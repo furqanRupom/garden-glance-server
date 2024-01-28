@@ -33,5 +33,10 @@ router.put('/:id',validateRequest(flowerValidation.FlowerUpdateValidationSchema)
 router.delete('/bulk/delete',flowersController.BulkDeleteFlower)
 
 
+/* added sold product */
+
+router.post('/sell',validateRequest(flowerValidation.SalesValidationSchema),flowersController.addSoldProduct)
+
+
 export const flowersRoutes = router;
 
