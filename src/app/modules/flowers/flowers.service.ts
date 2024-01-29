@@ -10,10 +10,55 @@ const addFlowerIntoDB = async (payload: IFLowers) => {
 
 /* read and view all flowers from inventory */
 
-const getAllFlowersFromDB = async () => {
+const getAllFlowersFromDB = async (queryOptions: any) => {
   const result = await FlowerModel.find();
+  const baseQuery: any = {};
+
+  if (queryOptions) {
+    if (queryOptions?.price) {
+      if (queryOptions?.price === 'one') {
+        console.log(queryOptions?.price)
+        baseQuery.price = {
+          $gte: 0,
+          $lte: 100,
+        };
+      } else if (queryOptions?.price === 'two') {
+        baseQuery.price = {
+          $gte: 101,
+          $lte: 500,
+        };
+      } else if (queryOptions?.price === 'three') {
+        baseQuery.price = {
+          $gte: 501,
+          $lte: 1000,
+        };
+      }
+    }
+
+    if (queryOptions?.size) {
+      baseQuery.size = queryOptions?.size;
+    }
+
+    if (queryOptions?.type) {
+      baseQuery.type = queryOptions?.type;
+    }
+
+    if (queryOptions?.fragrance) {
+      baseQuery.fragrance = queryOptions?.fragrance;
+    }
+
+    if (queryOptions?.color) {
+      baseQuery.color = queryOptions?.color;
+    }
+
+    const queryResult = await FlowerModel.find(baseQuery);
+
+    return queryResult;
+  }
   return result;
 };
+
+
 
 /* read single flowers from inventory */
 
@@ -108,7 +153,7 @@ const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
 
 
 
-   console.log(startDate);
+
     const salesHistory = await SalesModel.find({
       saleDate: {
         $gte: new Date(startDate),
@@ -116,7 +161,7 @@ const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
       },
     })
 
-    console.log(salesHistory);
+
     return salesHistory;
   } catch (error) {
     console.error(error);

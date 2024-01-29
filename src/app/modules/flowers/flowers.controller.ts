@@ -2,6 +2,7 @@
 
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { ICategory } from './flowers.interface';
 import { flowerServices } from './flowers.service';
 
 const addFlower = catchAsync(async (req, res) => {
@@ -18,7 +19,8 @@ const addFlower = catchAsync(async (req, res) => {
 /* view all the flowers controller */
 
 const getAllFlowers = catchAsync(async (req, res) => {
-  const result = await flowerServices.getAllFlowersFromDB();
+  console.log(req.query)
+  const result = await flowerServices.getAllFlowersFromDB(req.query);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -106,7 +108,7 @@ const categoriesSoldProductHistory = catchAsync(async (req, res) => {
   const  {category} = req?.query;
   console.log(category);
 
-  const result = await flowerServices.getCategoriesSoldProductFromHistory(category);
+  const result = await flowerServices.getCategoriesSoldProductFromHistory(category as any);
   sendResponse(res, {
     statusCode: 200,
     success: true,
