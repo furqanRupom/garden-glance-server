@@ -64,7 +64,7 @@ const SalesSchema = new Schema<ISales>(
       require: true,
     },
     saleDate: {
-      type: String,
+      type:Date,
       required: true,
     },
     quantity: {

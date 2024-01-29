@@ -1,6 +1,6 @@
 /* add flower to the inventory */
 
-import { IFLowers } from './flowers.interface';
+import { ICategory, IFLowers } from './flowers.interface';
 import FlowerModel, { SalesModel } from './flowers.model';
 
 const addFlowerIntoDB = async (payload: IFLowers) => {
@@ -65,10 +65,69 @@ const addSoldProductIntoDB = async (payload: Partial<any>) => {
     await FlowerModel.findByIdAndUpdate(payload.id,{
       quantity:quantity
     })
- 
+
    const result = await SalesModel.create(payload);
    return result;
 };
+
+
+/* categories by history and get sold history */
+
+
+
+const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
+  try {
+    let startDate: Date;
+
+    switch (category) {
+      case 'daily':
+        startDate = new Date();
+        startDate.setUTCHours(0, 0, 0, 0);
+        break;
+      case 'weekly':
+        startDate = new Date();
+        startDate.setUTCHours(0, 0, 0, 0);
+        startDate.setDate(startDate.getUTCDate() - startDate.getUTCDay());
+        break;
+      case 'monthly':
+        startDate = new Date();
+        startDate.setUTCHours(0, 0, 0, 0);
+        startDate.setUTCDate(1);
+        break;
+      case 'yearly':
+        startDate = new Date();
+        startDate.setUTCHours(0, 0, 0, 0);
+        startDate.setUTCMonth(0, 1);
+        break;
+      default:
+        return await SalesModel.find();
+    }
+
+    const endDate = new Date();
+    endDate.setUTCHours(23, 59, 59, 999);
+
+
+
+   console.log(startDate);
+    const salesHistory = await SalesModel.find({
+      saleDate: {
+        $gte: new Date(startDate),
+        $lte: new Date(endDate),
+      },
+    })
+
+    console.log(salesHistory);
+    return salesHistory;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error retrieving sales history');
+  }
+};
+
+
+
+
+
 
 export const flowerServices = {
   addFlowerIntoDB,
@@ -78,4 +137,5 @@ export const flowerServices = {
   deleteFlowerFromDB,
   bulkDeleteFlowersFromDB,
   addSoldProductIntoDB,
+  getCategoriesSoldProductFromHistory,
 };

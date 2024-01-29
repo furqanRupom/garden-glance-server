@@ -98,6 +98,23 @@ const addSoldProduct = catchAsync(async (req, res) => {
   });
 });
 
+
+/* get categories sold product history */
+
+
+const categoriesSoldProductHistory = catchAsync(async (req, res) => {
+  const  {category} = req?.query;
+  console.log(category);
+
+  const result = await flowerServices.getCategoriesSoldProductFromHistory(category);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Fetched Sold Product History!',
+    data: result,
+  });
+});
+
 export const flowersController = {
   addFlower,
   getAllFlowers,
@@ -105,5 +122,6 @@ export const flowersController = {
   updateFlower,
   deleteFlower,
   BulkDeleteFlower,
-  addSoldProduct
+  addSoldProduct,
+  categoriesSoldProductHistory
 };

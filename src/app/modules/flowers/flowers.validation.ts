@@ -33,7 +33,7 @@ import { z } from 'zod';
    body: z.object({
      id: z.string().optional(),
      buyerName: z.string().min(1),
-     saleDate: z.string(),
+     saleDate: z.coerce.date(),
      quantity: z.number().int().min(1),
    }),
  });

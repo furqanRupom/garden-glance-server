@@ -15,6 +15,9 @@ export interface IFLowers {
 export interface ISales {
   id: string;
   buyerName: string;
-  saleDate: string;
+  saleDate: Date;
   quantity: number;
 }
+
+
+export type ICategory = 'weekly' | 'daily' | 'monthly' | 'yearly'
