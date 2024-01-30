@@ -10,55 +10,53 @@ const addFlowerIntoDB = async (payload: IFLowers) => {
 
 /* read and view all flowers from inventory */
 
-const getAllFlowersFromDB = async (queryOptions: any) => {
-  const result = await FlowerModel.find();
+const getAllFlowersFromDB = async (queryOptions: Partial<any>) => {
   const baseQuery: any = {};
 
-  if (queryOptions) {
-    if (queryOptions?.price) {
-      if (queryOptions?.price === 'one') {
-        console.log(queryOptions?.price)
-        baseQuery.price = {
-          $gte: 0,
-          $lte: 100,
-        };
-      } else if (queryOptions?.price === 'two') {
-        baseQuery.price = {
-          $gte: 101,
-          $lte: 500,
-        };
-      } else if (queryOptions?.price === 'three') {
-        baseQuery.price = {
-          $gte: 501,
-          $lte: 1000,
-        };
-      }
+
+    if (queryOptions?.price === 'one') {
+      baseQuery.price = {
+        $gte: 0,
+        $lte: 100,
+      };
+    } else if (queryOptions?.price === 'two') {
+      baseQuery.price = {
+        $gte: 101,
+        $lte: 500,
+      };
+    } else if (queryOptions?.price === 'three') {
+      baseQuery.price = {
+        $gte: 501,
+        $lte: 1000,
+      };
     }
 
-    if (queryOptions?.size) {
-      baseQuery.size = queryOptions?.size;
-    }
+  if (queryOptions?.size === 'Small') {
+    baseQuery.size = 'Small';
+  }else if (queryOptions?.size === 'Medium'){
+    baseQuery.size = 'Medium'
+  }else if (queryOptions?.size === 'Large') {
+    baseQuery.size = 'Large';
+  }
 
-    if (queryOptions?.type) {
+
+    if (queryOptions?.type?.length > 0) {
       baseQuery.type = queryOptions?.type;
     }
 
-    if (queryOptions?.fragrance) {
-      baseQuery.fragrance = queryOptions?.fragrance;
-    }
-
-    if (queryOptions?.color) {
-      baseQuery.color = queryOptions?.color;
-    }
-
-    const queryResult = await FlowerModel.find(baseQuery);
-
-    return queryResult;
+  if (queryOptions?.fragrance?.length > 0) {
+    baseQuery.fragrance = queryOptions?.fragrance;
   }
+
+  if (queryOptions?.color?.length > 0) {
+    baseQuery.color = queryOptions?.color;
+  }
+  baseQuery.quantity = {$gt:0}
+  const queryResult = FlowerModel.find(baseQuery);
+  const result = await queryResult;
+  console.log(result);
   return result;
 };
-
-
 
 /* read single flowers from inventory */
 
@@ -105,22 +103,19 @@ const addSoldProductIntoDB = async (payload: Partial<any>) => {
 
   /* search the sold flower */
 
-  const flower =  await FlowerModel.findById(payload.id)
-    const quantity = flower!.quantity - payload.quantity;
-    await FlowerModel.findByIdAndUpdate(payload.id,{
-      quantity:quantity
-    })
+  const flower = await FlowerModel.findById(payload.id);
+  const quantity = flower!.quantity - payload.quantity;
+  await FlowerModel.findByIdAndUpdate(payload.id, {
+    quantity: quantity,
+  });
 
-   const result = await SalesModel.create(payload);
-   return result;
+  const result = await SalesModel.create(payload);
+  return result;
 };
-
 
 /* categories by history and get sold history */
 
-
-
-const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
+const getCategoriesSoldProductFromHistory = async (category: ICategory) => {
   try {
     let startDate: Date;
 
@@ -151,16 +146,12 @@ const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
     const endDate = new Date();
     endDate.setUTCHours(23, 59, 59, 999);
 
-
-
-
     const salesHistory = await SalesModel.find({
       saleDate: {
         $gte: new Date(startDate),
         $lte: new Date(endDate),
       },
-    })
-
+    });
 
     return salesHistory;
   } catch (error) {
@@ -168,11 +159,6 @@ const getCategoriesSoldProductFromHistory = async (category:ICategory) => {
     throw new Error('Error retrieving sales history');
   }
 };
-
-
-
-
-
 
 export const flowerServices = {
   addFlowerIntoDB,
