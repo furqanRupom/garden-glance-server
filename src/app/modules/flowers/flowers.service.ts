@@ -54,7 +54,6 @@ const getAllFlowersFromDB = async (queryOptions: Partial<any>) => {
   baseQuery.quantity = {$gt:0}
   const queryResult = FlowerModel.find(baseQuery);
   const result = await queryResult;
-  console.log(result);
   return result;
 };
 
@@ -73,13 +72,14 @@ const updateFlowerIntoDB = async (id: string, payload: Partial<IFLowers>) => {
     runValidators: true,
     new: true,
   });
+  console.log(result);
   return result;
 };
 
 /* delete a flower from the inventory */
 
 const deleteFlowerFromDB = async (id: string) => {
-  const result = await FlowerModel.findByIdAndDelete(id);
+  const result = await FlowerModel.deleteOne({_id:id});
   return result;
 };
 

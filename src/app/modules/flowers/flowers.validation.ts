@@ -24,7 +24,7 @@ import { z } from 'zod';
      size: z.enum(['Small', 'Medium', 'Large']).optional(),
      type: z.string().optional(),
      fragrance: z.string().optional(),
-   }),
+   }).optional(),
  });
 
 

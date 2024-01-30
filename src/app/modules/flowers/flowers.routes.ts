@@ -27,7 +27,7 @@ router.delete('/:id',flowersController.deleteFlower);
 
 /* update a flower */
 
-router.put('/:id',validateRequest(flowerValidation.FlowerUpdateValidationSchema),flowersController.updateFlower)
+router.patch('/update/:id',validateRequest(flowerValidation.FlowerUpdateValidationSchema),flowersController.updateFlower)
 
 /* bulk delete */
 router.delete('/bulk/delete',flowersController.BulkDeleteFlower)
