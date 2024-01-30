@@ -29,7 +29,7 @@ Welcome to the back-end of Garden Glance, an advanced CRUD application for manag
 
 - Endpoint: `PATCH /update/:id`
 - Users can update details of a specific flower product.
-- Request body is validated using `flowerValidation.FlowerUpdateValidationSchema`.
+
 
 ### 6. Bulk Delete
 
@@ -40,7 +40,7 @@ Welcome to the back-end of Garden Glance, an advanced CRUD application for manag
 
 - Endpoint: `POST /sell`
 - Users can add a sold flower product, storing sales information.
-- Request body is validated using `flowerValidation.SalesValidationSchema`.
+
 
 ### 8. Sold Product History
 
@@ -51,13 +51,13 @@ Welcome to the back-end of Garden Glance, an advanced CRUD application for manag
 
 - Endpoint: `POST /register`
 - Users can register for an account.
-- Request body is validated using `authValidations.userValidationSchema`.
+
 
 ### 10. User Login
 
 - Endpoint: `POST /login`
 - Users can log in to their accounts.
-- Request body is validated using `authValidations.loginValidationSchema`.
+
 
 ### 11. Get User Details
 
