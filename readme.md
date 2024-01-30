@@ -78,10 +78,12 @@ The back-end of Garden Glance is built using TypeScript, Mongoose, and Express. 
 
    ```bash
    git clone https://github.com/your-username/garden-glance-backend.git
-```
+    ```
 
 
-2. Navigate to the project directory:
+2.  Navigate to the project directory:
+
+
 
 ```bash
 cd gardenGlance-server
